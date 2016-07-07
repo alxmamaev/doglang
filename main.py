@@ -7,8 +7,8 @@ code = []
 line_number = 0
 
 def Error():
-    print("Гррр!")
-
+    input("Гррр!")
+    exit()
 def dog_sum(value):
     if len(stack) > 1: stack.append(stack.pop(-1)+stack.pop(-1))
     else: Error()
@@ -57,7 +57,11 @@ def dog_goto(value):
     if value and labels.get(value) is not None:
         if stack[-1] == 0: line_number = labels[value]
     else: Error()
-        
+
+def dog_exit(value):
+    input("==================")
+    exit()
+       
 cmd = {
 "тяф!":dog_input,
 "гав!":dog_output,
@@ -70,7 +74,8 @@ cmd = {
 "руф!":dog_flip,
 "рав?":dog_stack,
 "хыр": dog_label,
-"рых":dog_goto
+"рых":dog_goto,
+"рюх.":dog_exit
 
 }
 
@@ -93,15 +98,27 @@ def run_code():
 def editor():
     print("=====================")
     global code
-    line = input()
     while line != "рюх.":
-        code.append(line)
         line = input()
+        code.append(line)
     run_code()
-
+    
+def read_file():
+    print("=====================")
+    file_name = input("Гав, рыв гыррр: ")
+    file = codecs.open(file_name,"r","utf-8")
+    line = ""
+    while line != "рюх.":
+        line = file.readline().strip()
+        code.append(line)
+    file.close()
+    run_code()
+    print("=====================")
 def main():
     while True:
         comand = input()
         if comand == "груг!": editor()
+        elif comand == "рыв!": read_file()
+        else: Error()
 
 if __name__ == "__main__": main()
