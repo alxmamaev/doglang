@@ -37,9 +37,14 @@ def dog_output(value):
     
 def dog_chrout(value):
     try:
-        print(">>",chr(stack[-1]))
+        print(chr(stack[-1]), end = "")
     except:
         print("?")
+
+def dog_chrin(value):
+    value = input("<< ")
+    for ch in value:
+        stack.append(ord(ch))
 
 def dog_push(value):
     if value.isdigit(): stack.append(int(value))
@@ -56,13 +61,17 @@ def dog_flip(value):
     if len(stack) > 1: stack += [stack.pop(-1),stack.pop(-1)]
     else: Error()
 
+def dog_flip_all(value):
+    global stack
+    stack = stack[::-1]
+
 def dog_label(value):
     if value and labels.get(value) is None: labels[value] = line_number
     else: Error()
 
 def dog_goto(value):
     global line_number
-    if value and labels.get(value) is not None:
+    if value and labels.get(value) is not None and stack:
         if stack[-1] != 0: line_number = labels[value]
     else: Error()
 
@@ -75,6 +84,7 @@ def dog_exit(value):
 cmd = {
 "тяв!": dog_input,
 "гав!": dog_output,
+"тяф!": dog_chrin,
 "гаф!": dog_chrout,
 "вов!": dog_sum,
 "ваф!": dog_sub,
@@ -83,6 +93,7 @@ cmd = {
 "тряв!":dog_push,
 "тряф!": dog_get,
 "руф!": dog_flip,
+"раф!" : dog_flip_all,
 "рав?": dog_stack,
 "хыр": dog_label,
 "рых": dog_goto,
