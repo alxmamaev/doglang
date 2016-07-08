@@ -76,6 +76,7 @@ def dog_goto(value):
     else: Error()
 
 def dog_exit(value):
+    print()
     print("==================")
     input()
     exit()
