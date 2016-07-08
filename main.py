@@ -128,8 +128,18 @@ def editor():
     line = ""
     while line != "рюх.":
         line = input(str(line_number)+": ")
-        code.append(line)
+        
+        # Убираем комментированные символы
+        line = line[:line.find(";")]
+        
+        # Убираем лишние пробелы
+        line = " ".join(line.split())        
+        
+        # Добавляем строку если она не пустая
+        if line: code.append(line)
+        
         line_number += 1
+    
     line_number = 0
     run_code()
 
@@ -140,8 +150,18 @@ def read_file():
     file = codecs.open(file_name,"r","utf-8")
     line = ""
     while line != "рюх.":
+        # Убираем спец символы (символы переноса и т.д)
         line = file.readline().strip()
-        code.append(line)
+        
+        # Убираем комментированные символы
+        cmnt_chr = line.find(";")
+        if cmnt_chr != -1: line = line[:cmnt_chr]
+        
+        # Убираем лишние пробелы
+        line = " ".join(line.split())
+        
+        # Добавляем строку если она не пустая
+        if line: code.append(line)
     file.close()
     run_code()
     print("==================")
