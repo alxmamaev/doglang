@@ -6,9 +6,11 @@ labels = dict()
 code = []
 line_number = 0
 
+# Функции отвечающие за работу команд языка
+
 def Error():
-    input("Гррр!")
-    exit()
+    print("Гррр!")
+    
 def dog_sum(value):
     if len(stack) > 1: stack.append(stack.pop(-1)+stack.pop(-1))
     else: Error()
@@ -31,10 +33,16 @@ def dog_input(value):
     else: Error()
     
 def dog_output(value):
-    if len(stack) > 0: print(">>",stack.pop(-1))
+    if len(stack) > 0: print(">>",stack[-1])
+    
+def dog_chrout(value):
+    try:
+        print(">>",chr(stack[-1]))
+    except:
+        print("?")
 
 def dog_push(value):
-    if value.isdigit(): stack.append(int(value[1]))
+    if value.isdigit(): stack.append(int(value))
     else: Error()
 
 def dog_get(value):
@@ -55,30 +63,35 @@ def dog_label(value):
 def dog_goto(value):
     global line_number
     if value and labels.get(value) is not None:
-        if stack[-1] == 0: line_number = labels[value]
+        if stack[-1] != 0: line_number = labels[value]
     else: Error()
 
 def dog_exit(value):
-    input("==================")
+    print("==================")
+    input()
     exit()
-       
+
+# Словарь, ассоцирующий команду с функцией.     
 cmd = {
-"тяф!":dog_input,
-"гав!":dog_output,
+"тяв!": dog_input,
+"гав!": dog_output,
+"гаф!": dog_chrout,
 "вов!": dog_sum,
 "ваф!": dog_sub,
 "ряф!": dog_mult,
 "вуф!": dog_div,
 "тряв!":dog_push,
-"тряф!":dog_get,
-"руф!":dog_flip,
-"рав?":dog_stack,
+"тряф!": dog_get,
+"руф!": dog_flip,
+"рав?": dog_stack,
 "хыр": dog_label,
-"рых":dog_goto,
-"рюх.":dog_exit
+"рых": dog_goto,
+"рюх.": dog_exit
 
 }
 
+# Парсер разделяет строку на две части, это команда и ее значения
+# команда сверяется с ассоциативным массивом функций, и выполняет функцию ассоциированную с ней. 
 def parser(ln):
     ln = ln.strip().split()
     if ln:
@@ -88,23 +101,29 @@ def parser(ln):
         else: Error()
     else: Error()
 
+# Читаем по строчно команды и отправляем их в парсер
 def run_code():
     global line_number
-    print("=====================")
+    print("==================")
     while line_number < len(code): 
         parser(code[line_number])
         line_number += 1
 
+# В редакторе мы зыписываем все введенные строки в массив code, до тех пор пока не введут команду означающую конец программы. Программа запустится.
 def editor():
-    print("=====================")
-    global code
+    print("==================")
+    global code, line_number
+    line = ""
     while line != "рюх.":
-        line = input()
+        line = input(str(line_number)+": ")
         code.append(line)
+        line_number += 1
+    line_number = 0
     run_code()
-    
+
+# В редакторе мы читаем файл и записываем все строки в массив code, и запускаем программу с помощью функции run_code
 def read_file():
-    print("=====================")
+    print("==================")
     file_name = input("Гав, рыв гыррр: ")
     file = codecs.open(file_name,"r","utf-8")
     line = ""
@@ -113,7 +132,9 @@ def read_file():
         code.append(line)
     file.close()
     run_code()
-    print("=====================")
+    print("==================")
+
+# Здесь мы ждем команды: что необходимо запустить редактор или интерпретатор фалов
 def main():
     while True:
         comand = input()
