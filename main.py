@@ -121,22 +121,33 @@ def run_code():
         parser(code[line_number])
         line_number += 1
 
+# Функция убирает все что не нужно интепретатору (символы переноса, табуляцию комментариии)
+def line_format(line):
+    line = line.strip()
+    comment_chr = ";"
+    special_chrs = ["\n","\t","\v"]
+    frmt_line = ""
+    space = False
+    for ch in line:
+        if ch == comment_chr: break
+        elif space and ch == " ":
+            frmt_line += " "
+            space = False
+        elif ch not in special_chrs:
+            frmt_line += ch
+            space = True
+    return frmt_line if frmt_line else None
+    
 # В редакторе мы зыписываем все введенные строки в массив code, до тех пор пока не введут команду означающую конец программы. Программа запустится.
 def editor():
     print("==================")
     global code, line_number
     line = ""
     while line != "рюх.":
-        line = input(str(line_number)+": ")
         
-        # Убираем комментированные символы
-        line = line[:line.find(";")]
-        
-        # Убираем лишние пробелы
-        line = " ".join(line.split())        
-        
-        # Добавляем строку если она не пустая
-        if line: code.append(line)
+        # Убираем из строки все ненужные символы и добавляем ее в код
+        line = line_format(line)
+        if line is not None: code.append(line)
         
         line_number += 1
     
@@ -150,18 +161,11 @@ def read_file():
     file = codecs.open(file_name,"r","utf-8")
     line = ""
     while line != "рюх.":
-        # Убираем спец символы (символы переноса и т.д)
-        line = file.readline().strip()
+        line = file.readline()
+        # Убираем из строки все ненужные символы и добавляем ее в код
+        line = line_format(line)
+        if line is not None: code.append(line)      
         
-        # Убираем комментированные символы
-        cmnt_chr = line.find(";")
-        if cmnt_chr != -1: line = line[:cmnt_chr]
-        
-        # Убираем лишние пробелы
-        line = " ".join(line.split())
-        
-        # Добавляем строку если она не пустая
-        if line: code.append(line)
     file.close()
     run_code()
     print("==================")
