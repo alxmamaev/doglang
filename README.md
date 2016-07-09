@@ -1,4 +1,4 @@
-![logo](https://pp.vk.me/c626921/v626921884/2fa08/fIEoWVs-3tY.jpg)
+![logo](https://pp.vk.me/c633117/v633117884/39c52/vwJMRgdrFAY.jpg)
 # Doglang
 Doglang - язык программирования для собак основанный на стековой машине.
 ##Краткое руководство:
