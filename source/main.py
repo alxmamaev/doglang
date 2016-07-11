@@ -9,7 +9,7 @@ line_number = 0
 # Функции отвечающие за работу команд языка
 
 def Error():
-    print("Гррр!")
+    print("Гррр! Роггрр: %s!"%line_number)
     
 def dog_sum(value):
     if len(stack) > 1: stack.append(stack.pop(-1)+stack.pop(-1))
@@ -33,7 +33,7 @@ def dog_input(value):
     else: Error()
     
 def dog_output(value):
-    if len(stack) > 0: print("\n"+">>",stack[-1],end = "")
+    if len(stack) > 0: print(stack[-1],end = "")
     
 def dog_chrout(value):
     try:
@@ -72,7 +72,7 @@ def dog_label(value):
 def dog_goto(value):
     global line_number
     if value and labels.get(value) is not None and stack:
-        if stack[-1] != 0: line_number = labels[value]
+        if stack[-1] != 0 and stack: line_number = labels[value]
     else: Error()
 
 def dog_exit(value):
