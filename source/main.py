@@ -33,7 +33,7 @@ def dog_input(value):
     else: Error()
     
 def dog_output(value):
-    if len(stack) > 0: print(">>",stack[-1])
+    if len(stack) > 0: print("\n"+">>",stack[-1],end = "")
     
 def dog_chrout(value):
     try:
@@ -144,6 +144,8 @@ def editor():
     global code, line_number
     line = ""
     while line != "рюх.":
+        
+        line = input(str(line_number)+": ")
         
         # Убираем из строки все ненужные символы и добавляем ее в код
         line = line_format(line)
