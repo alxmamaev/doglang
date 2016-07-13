@@ -28,7 +28,7 @@ Doglang - язык основаный на работе с [стеком](https:
 После запуска интепретатора, вам будет необходимо указать путь до файла с программой на языке Doglang.
 
 ##Запуск
-* Если у вас windows, в папке exe_for_windows лежит уже собранный exe файл. Для запуска собранного exe файла необходимо иметь установленный [MVC++](https://www.microsoft.com/ru-ru/download/details.aspx?id=40784&wa=wsignin1.0)[https://www.microsoft.com/ru-RU/download/details.aspx?id=5555]
+* Если у вас windows, в папке exe_for_windows лежит уже собранный exe файл. Для запуска собранного exe файла необходимо иметь установленный [MVC++](https://www.microsoft.com/ru-RU/download/details.aspx?id=5555)
 * Ксли у вас другая ОС, вам необходимо скачать python версии 3 и запустить файл main.py
 
 ##Пример программы
