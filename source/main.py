@@ -66,8 +66,8 @@ def dog_push(values):
     for value in values:
         if value.isdigit(): 
             stack.append(int(value))
-            return 0
         else: return RunTimeError()
+    return 0
 
 def dog_del(values):
     if stack: stack.pop(-1)
@@ -90,18 +90,23 @@ def dog_flip_all(values):
 def dog_goto(values):
     global line_number
     if len(values) == 1 and labels.get(values[0]) is not None and stack:
-        if stack[-1] != 0 and stack: line_number = labels[values[0]]
+        if stack[-1] != 0: line_number = labels[values[0]]
         return 0
     else: return CompilationError()
 
 def dog_label(values):
-    if len(values) == 1 and labels.get(values[0]) is None: 
-        labels[values[0]] = line_number
+    if len(values) == 1:
+        if labels.get(values[0]) is None: labels[values[0]] = line_number
         return 0
     else: return CompilationError()
 
 def nothing(value): return 0
 
+def reset():
+    global line_number, stack, labels
+    stack = []
+    labels = dict()
+    line_number = 0    
 # Словарь, ассоцирующий команду с функцией.     
 cmd = {
 "тяв!": dog_input,
@@ -147,9 +152,13 @@ def run(code):
         if line is not None: 
             (command, values) = line[0], line[1:]
             if cmd.get(command) is not None: 
-                if cmd[command](values): return 1
+                if cmd[command](values):
+                    reset()
+                    return 1
+            
             else: return CompilationError()
         line_number += 1
+    reset()
     return 0
 
 def main():
@@ -157,5 +166,8 @@ def main():
     while True:
         print("\n==================")
         file_name = input("< ")
-        run(codecs.open(file_name,"r","utf-8").readlines())
+        file = codecs.open(file_name,"r","utf-8")
+        run(file.readlines())
+        file.close()
+        
 if __name__ == "__main__": main()
