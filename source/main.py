@@ -1,85 +1,106 @@
 # -*- coding: utf-8 -*-
 import codecs
+import os.path
 
 stack = []
 labels = dict()
-code = []
 line_number = 0
 
 # Функции отвечающие за работу команд языка
 
-def Error():
-    print("Гррр! Роггрр: %s!"%line_number)
-    
-def dog_sum(value):
-    if len(stack) > 1: stack.append(stack.pop(-1)+stack.pop(-1))
-    else: Error()
+def RunTimeError():
+    print("Гррр! Рыф! Роггрр: %s!"%(line_number+1))
+    return 1
+def CompilationError():
+    print("Гррр! Вофр! Роггрр: %s!"%(line_number+1))
+    return 1
 
-def dog_sub(value):
-    if len(stack) > 1: stack.append(stack.pop(-1)-stack.pop(-1))
-    else: Error()    
+def dog_sum(values):
+    if len(stack) > 1: 
+        stack.append(stack.pop(-1)+stack.pop(-1))
+        return 0
+    else: return RunTimeError()
 
-def dog_mult(value):
-    if len(stack) > 1: stack.append(stack.pop(-1)*stack.pop(-1))
-    else: Error()   
+def dog_sub(values):
+    if len(stack) > 1: 
+        stack.append(stack.pop(-1)-stack.pop(-1))
+        return 0
+    else: return RunTimeError()    
 
-def dog_div(value):
-    if len(stack) > 1: stack.append(stack.pop(-1)//stack.pop(-1))
-    else: Error()     
+def dog_mult(values):
+    if len(stack) > 1: 
+        stack.append(stack.pop(-1)*stack.pop(-1))
+        return 0
+    else: return RunTimeError()   
 
-def dog_input(value):
+def dog_div(values):
+    if len(stack) > 1: 
+        stack.append(stack.pop(-1)//stack.pop(-1))
+        return 0
+    else: return RunTimeError()     
+
+def dog_input(values):
     input_value = input("<< ")
-    if input_value.isdigit(): stack.append(int(input_value))
-    else: Error()
+    if input_value.isdigit(): 
+        stack.append(int(input_value))
+        return 0
+    else: return RunTimeError()
     
-def dog_output(value):
+def dog_output(values):
     if len(stack) > 0: print(stack[-1],end = "")
-    
-def dog_chrout(value):
+    return 0
+
+def dog_chrin(values):
+    value = input("<< ")
+    for ch in value: stack.append(ord(ch))
+    return 0 
+
+def dog_chrout(values):
     try:
         print(chr(stack[-1]), end = "")
     except:
         print("?")
+    return 0
 
-def dog_chrin(value):
-    value = input("<< ")
-    for ch in value:
-        stack.append(ord(ch))
+def dog_push(values):
+    for value in values:
+        if value.isdigit(): 
+            stack.append(int(value))
+            return 0
+        else: return RunTimeError()
 
-def dog_push(value):
-    if value.isdigit(): stack.append(int(value))
-    else: Error()
-
-def dog_get(value):
+def dog_del(values):
     if stack: stack.pop(-1)
+    return 0
 
-def dog_stack(value):
+def dog_stack(values):
     print("HEAD <<",stack[::-1])
+    return 0    
 
-def dog_flip(value):
+def dog_flip(values):
     global stack
     if len(stack) > 1: stack += [stack.pop(-1),stack.pop(-1)]
-    else: Error()
+    return 0
 
-def dog_flip_all(value):
+def dog_flip_all(values):
     global stack
     stack = stack[::-1]
+    return 0
 
-def dog_label(value):
-    if value and labels.get(value) is None: labels[value] = line_number
-    else: Error()
-
-def dog_goto(value):
+def dog_goto(values):
     global line_number
-    if value and labels.get(value) is not None and stack:
-        if stack[-1] != 0 and stack: line_number = labels[value]
-    else: Error()
+    if len(values) == 1 and labels.get(values[0]) is not None and stack:
+        if stack[-1] != 0 and stack: line_number = labels[values[0]]
+        return 0
+    else: return CompilationError()
 
-def dog_exit(value):
-    print()
-    print("==================")
-    input()
-    exit()
+def dog_label(values):
+    if len(values) == 1 and labels.get(values[0]) is None: 
+        labels[values[0]] = line_number
+        return 0
+    else: return CompilationError()
+
+def nothing(value): return 0
 
 # Словарь, ассоцирующий команду с функцией.     
 cmd = {
@@ -92,34 +113,14 @@ cmd = {
 "ряф!": dog_mult,
 "вуф!": dog_div,
 "тряв!":dog_push,
-"тряф!": dog_get,
+"тряф!": dog_del,
 "руф!": dog_flip,
 "раф!" : dog_flip_all,
 "рав?": dog_stack,
-"хыр": dog_label,
 "рых": dog_goto,
-"рюх.": dog_exit
-
+"хыр" : dog_label,
 }
 
-# Парсер разделяет строку на две части, это команда и ее значения
-# команда сверяется с ассоциативным массивом функций, и выполняет функцию ассоциированную с ней. 
-def parser(ln):
-    ln = ln.strip().split()
-    if ln:
-        (command, value) = ln[0], ln[1] if len(ln) > 1 else ""
-        if cmd.get(command) is not None:
-            cmd.get(command)(value)
-        else: Error()
-    else: Error()
-
-# Читаем по строчно команды и отправляем их в парсер
-def run_code():
-    global line_number
-    print("==================")
-    while line_number < len(code): 
-        parser(code[line_number])
-        line_number += 1
 
 # Функция убирает все что не нужно интепретатору (символы переноса, табуляцию комментариии)
 def line_format(line):
@@ -136,48 +137,25 @@ def line_format(line):
         elif ch not in special_chrs:
             frmt_line += ch
             space = True
-    return frmt_line if frmt_line else None
-    
-# В редакторе мы зыписываем все введенные строки в массив code, до тех пор пока не введут команду означающую конец программы. Программа запустится.
-def editor():
-    print("==================")
-    global code, line_number
-    line = ""
-    while line != "рюх.":
-        
-        line = input(str(line_number)+": ")
-        
-        # Убираем из строки все ненужные символы и добавляем ее в код
-        line = line_format(line)
-        if line is not None: code.append(line)
-        
+    return frmt_line.split() if frmt_line else None
+
+
+def run(code):
+    global line_number
+    while line_number < len(code):
+        line = line_format(code[line_number])
+        if line is not None: 
+            (command, values) = line[0], line[1:]
+            if cmd.get(command) is not None: 
+                if cmd[command](values): return 1
+            else: return CompilationError()
         line_number += 1
-    
-    line_number = 0
-    run_code()
+    return 0
 
-# В редакторе мы читаем файл и записываем все строки в массив code, и запускаем программу с помощью функции run_code
-def read_file():
-    print("==================")
-    file_name = input("Гав, рыв гыррр: ")
-    file = codecs.open(file_name,"r","utf-8")
-    line = ""
-    while line != "рюх.":
-        line = file.readline()
-        # Убираем из строки все ненужные символы и добавляем ее в код
-        line = line_format(line)
-        if line is not None: code.append(line)      
-        
-    file.close()
-    run_code()
-    print("==================")
-
-# Здесь мы ждем команды: что необходимо запустить редактор или интерпретатор фалов
 def main():
+    print("Doglang v1.1")
     while True:
-        comand = input()
-        if comand == "груг!": editor()
-        elif comand == "рыв!": read_file()
-        else: Error()
-
+        print("\n==================")
+        file_name = input("< ")
+        run(codecs.open(file_name,"r","utf-8").readlines())
 if __name__ == "__main__": main()
