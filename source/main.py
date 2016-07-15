@@ -40,12 +40,12 @@ def dog_div(values):
     else: return RunTimeError()     
 
 def dog_input(values):
-    input_value = input("<< ")
-    if input_value.isdigit(): 
-        stack.append(int(input_value))
-        return 0
-    else: return RunTimeError()
-    
+    values = input("<< ").split()
+    for value in values:
+        if value.isdigit(): stack.append(int(value))
+        else: return RunTimeError()
+    return 0
+
 def dog_output(values):
     if len(stack) > 0: print(stack[-1],end = "")
     return 0
