@@ -1,5 +1,5 @@
 #Version: 1.1
-![logo](https://pp.vk.me/c633117/v633117884/39c64/C8eZ4cBRAzU.jpg)
+![logo](https://github.com/alxmamaev/Doglang/blob/master/img/logo.jpg?)
 # Doglang
 Doglang - язык программирования для собак основаный на стековой машине.
 ##Краткое руководство:
@@ -59,7 +59,7 @@ Doglang - язык основаный на работе с [стеком](https:
 
 ##Подсветка синтаксиса
 Вы можете установить синтаксис Doglang в редактор notepad++(или совместимый), xml-файл подсветки находтся в папке highlighter/
-![](https://pp.vk.me/c626521/v626521884/18583/DoAPXk3uxjQ.jpg)
+![](https://github.com/alxmamaev/Doglang/blob/master/img/notepad.jpeg)
 ##Автор
 **Мамаев Александр** (alxmamaev)
 <br>[Вконтакте](https://new.vk.com/alex__mamaev)
