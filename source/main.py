@@ -16,45 +16,53 @@ def CompilationError():
     return 1
 
 def dog_sum(values):
+    if len(values) > 0: CompilationError()
     if len(stack) > 1: 
         stack.append(stack.pop(-1)+stack.pop(-1))
         return 0
     else: return RunTimeError()
 
 def dog_sub(values):
+    if len(values) > 0: CompilationError()
     if len(stack) > 1: 
         stack.append(stack.pop(-1)-stack.pop(-1))
         return 0
     else: return RunTimeError()    
 
 def dog_mult(values):
+    if len(values) > 0: CompilationError()
     if len(stack) > 1: 
         stack.append(stack.pop(-1)*stack.pop(-1))
         return 0
     else: return RunTimeError()   
 
 def dog_div(values):
+    if len(values) > 0: CompilationError()
     if len(stack) > 1: 
         stack.append(stack.pop(-1)//stack.pop(-1))
         return 0
     else: return RunTimeError()     
 
 def dog_input(values):
+    if len(values) > 0: CompilationError()
     value = input("<< ").split()
     if value.isdigit(): stack.append(int(value))
     else: return RunTimeError()
     return 0
 
 def dog_output(values):
+    if len(values) > 0: CompilationError()
     if len(stack) > 0: print(stack[-1],end = "")
     return 0
 
 def dog_chrin(values):
+    if len(values) > 0: CompilationError()
     value = input("<< ")
     for ch in value: stack.append(ord(ch))
     return 0 
 
 def dog_chrout(values):
+    if len(values) > 0: CompilationError()
     try:
         print(chr(stack[-1]), end = "")
     except:
@@ -69,19 +77,23 @@ def dog_push(values):
     return 0
 
 def dog_del(values):
+    if len(values) > 0: CompilationError()
     if stack: stack.pop(-1)
     return 0
 
 def dog_stack(values):
+    if len(values) > 0: CompilationError()
     print("HEAD <<",stack[::-1])
     return 0    
 
 def dog_flip(values):
+    if len(values) > 0: CompilationError()
     global stack
     if len(stack) > 1: stack += [stack.pop(-1),stack.pop(-1)]
     return 0
 
 def dog_flip_all(values):
+    if len(values) > 0: CompilationError()
     global stack
     stack = stack[::-1]
     return 0
@@ -98,8 +110,6 @@ def dog_label(values):
         if labels.get(values[0]) is None: labels[values[0]] = line_number
         return 0
     else: return CompilationError()
-
-def nothing(value): return 0
 
 def reset():
     global line_number, stack, labels
