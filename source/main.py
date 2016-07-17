@@ -65,7 +65,7 @@ def dog_push(values):
     for value in values:
         if value.isdigit(): 
             stack.append(int(value))
-        else: return RunTimeError()
+        else: return CompilationError()
     return 0
 
 def dog_del(values):
