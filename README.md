@@ -60,8 +60,9 @@ Doglang - язык основаный на работе с [стеком](https:
 ##Подсветка синтаксиса
 Вы можете установить синтаксис Doglang в редактор notepad++(или совместимый), xml-файл подсветки находтся в папке highlighter/
 ![](https://github.com/alxmamaev/Doglang/blob/master/img/notepad.jpeg)
+
 ##Автор
-**Мамаев Александр** (alxmamaev)
+**Мамаев Александр** ([alxmamaev](https://alxmamaev.github.io/))
 <br>[Вконтакте](https://new.vk.com/alex__mamaev)
 <br>alxmamaev@mail.ru 
 
