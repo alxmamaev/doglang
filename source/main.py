@@ -45,7 +45,7 @@ def dog_div(values):
 
 def dog_input(values):
     if len(values) > 0: CompilationError()
-    value = input("<< ").split()
+    value = input("<< ").split()[0]
     if value.isdigit(): stack.append(int(value))
     else: return RunTimeError()
     return 0
@@ -111,6 +111,10 @@ def dog_label(values):
         return 0
     else: return CompilationError()
 
+def dog_copy(valuses):
+	if stack: stack.append(stack[-1])
+	return 0
+
 def reset():
     global line_number, stack, labels
     stack = []
@@ -129,6 +133,7 @@ cmd = {
 "тряв!":dog_push,
 "тряф!": dog_del,
 "руф!": dog_flip,
+"брюх!":dog_copy,
 "раф!" : dog_flip_all,
 "рав?": dog_stack,
 "рых": dog_goto,
