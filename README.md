@@ -68,4 +68,4 @@ Doglang - язык основаный на работе с [стеком](https:
 ##Автор
 **Мамаев Александр** ([alxmamaev](https://alxmamaev.github.io/))
 <br>[Вконтакте](https://new.vk.com/alex__mamaev)
-<br>alxmamaev@mail.ru 
+<br>alxmamaev@ya.ru 
