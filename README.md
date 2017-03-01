@@ -1,5 +1,5 @@
 #Version: 1.1
-![logo](https://github.com/alxmamaev/image-storage/tree/master/doglang)
+![logo](https://github.com/alxmamaev/image-storage/blob/master/doglang/logo.jpg)
 # Doglang
 Doglang - язык программирования для собак основаный на стековой машине.
 ##Краткое руководство:
